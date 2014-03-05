@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Web.Http;
 
 namespace RTServer.Controllers
@@ -12,20 +14,47 @@ namespace RTServer.Controllers
         // GET api/values
         public IEnumerable<Customer> Get()
         {
-            var list = new List<Customer>();
+            //var list = new List<Customer>();
 
-            for (int i = 0; i < 10; i++)
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    list.Add(new Customer
+            //    {
+            //        OrderId = i * 123,
+            //        CustomerId = "Customer "+ i,
+            //        EmployeeId = i,
+            //        Freight = (double)i/32,
+            //        OrderDate = DateTime.Now,
+            //        ShipAdress = "Lviv, Street " + i *2 ,
+            //        ShipName = "SomeName"
+            //    });
+            //}
+            //return list;
+            var list = new List<Customer>();
+            var properties = typeof (Customer).GetProperties();
+
+            var outputDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+            var logoFile = Path.Combine(outputDirectory, "Customers.txt");
+            var realLogo = new Uri(logoFile).LocalPath;
+
+            using (var sr = new StreamReader(realLogo))
             {
-                list.Add(new Customer
+                while (!sr.EndOfStream)
                 {
-                    OrderId = i * 123,
-                    CustomerId = "Customer "+ i,
-                    EmployeeId = i,
-                    Freight = (double)i/32,
-                    OrderDate = DateTime.Now,
-                    ShipAdress = "Lviv, Street " + i *2 ,
-                    ShipName = "SomeName"
-                });
+                    var strLine = sr.ReadLine();
+                    var data = strLine.Split('\t');
+                    var customer = new Customer
+                    {
+                        OrderId = Convert.ToInt32(data[0]),
+                        CustomerId = data[1],
+                        EmployeeId = Convert.ToInt32(data[2]),
+                        OrderDate = Convert.ToDateTime(data[3]),
+                        Freight = Convert.ToDouble(data[4]),
+                        ShipName = data[5],
+                        ShipAdress = data[6]
+                    };
+                    list.Add(customer);
+                }
             }
             return list;
         }
