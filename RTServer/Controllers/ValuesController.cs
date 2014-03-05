@@ -83,6 +83,8 @@ namespace RTServer.Controllers
 
     public class Customer
     {
+        public int Index { get; set; }
+
         public int OrderId { get; set; }
 
         public string CustomerId { get; set; }
@@ -117,6 +119,7 @@ namespace RTServer.Controllers
         {
             var temp = new Customer()
             {
+                Index = Index,
                 OrderId = OrderId,
                 CustomerId = CustomerId,
                 EmployeeId = EmployeeId,
