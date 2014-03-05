@@ -149,7 +149,6 @@ C:\Users\Taras\Desktop\RTServer\RTServer\RTServer\bin\Microsoft.AspNet.SignalR.S
 C:\Users\Taras\Desktop\RTServer\RTServer\RTServer\bin\Microsoft.Owin.xml
 C:\Users\Taras\Desktop\RTServer\RTServer\RTServer\bin\Microsoft.Owin.Host.SystemWeb.xml
 C:\Users\Taras\Desktop\RTServer\RTServer\RTServer\bin\Microsoft.Owin.Security.xml
-C:\RTRemoteServer\RTServer\obj\Debug\RTServer.csprojResolveAssemblyReference.cache
 C:\RTRemoteServer\RTServer\bin\RTServer.dll
 C:\RTRemoteServer\RTServer\bin\RTServer.pdb
 C:\RTRemoteServer\RTServer\bin\Antlr3.Runtime.dll

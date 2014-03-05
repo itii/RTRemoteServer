@@ -76,7 +76,7 @@ namespace RTServer
         //    Clients.All.addMessage(name, record);
         //}
 
-        public void Send(Record record)
+        public void Send(Customer record)
         {
             Clients.All.addMessage(record);
         }
@@ -102,11 +102,9 @@ namespace RTServer
         public void ActivateRandomizeData()
         {
             var radnom = new Random();
-            var record = new Record()
+            var record = new Customer()
             {
-                RecordKey = radnom.Next(100),
-                Value = radnom.Next(1000).ToString(),
-                Description = DateTime.Now.ToString()
+                
             };
             Clients.All.addMessage(record);
         }
