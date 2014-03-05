@@ -74,8 +74,7 @@ namespace RTServer
 
         public void Send(Customer record)
         {
-            if(Users.Contains(Context.ConnectionId))
-               Clients.AllExcept(Context.ConnectionId).addMessage(record);
+            Clients.Others.addMessage(record);
         }
         
 

@@ -308,6 +308,5 @@ C:\GitSource\RTServer\RTServer\bin\ko\System.Spatial.resources.dll
 C:\GitSource\RTServer\RTServer\bin\ru\System.Spatial.resources.dll
 C:\GitSource\RTServer\RTServer\bin\zh-Hans\System.Spatial.resources.dll
 C:\GitSource\RTServer\RTServer\bin\zh-Hant\System.Spatial.resources.dll
-C:\GitSource\RTServer\RTServer\obj\Debug\RTServer.csprojResolveAssemblyReference.cache
 C:\GitSource\RTServer\RTServer\obj\Debug\RTServer.dll
 C:\GitSource\RTServer\RTServer\obj\Debug\RTServer.pdb
