@@ -71,14 +71,11 @@ namespace RTServer
     {
         static List<string> Users = new List<string>();
 
-        //public void Send(string name, Record record)
-        //{
-        //    Clients.All.addMessage(name, record);
-        //}
 
         public void Send(Customer record)
         {
-            Clients.All.addMessage(record);
+            if(Users.Contains(Context.ConnectionId))
+               Clients.AllExcept(Context.ConnectionId).addMessage(record);
         }
         
 
@@ -87,27 +84,11 @@ namespace RTServer
             var id = Context.ConnectionId;
 
 
-            Users.Add(userName);
+            Users.Add(id);
 
-            //Clients.Caller.onConnected(id, userName, Users);
 
-            //Clients.AllExcept(id).onNewUserConnected(id, userName);
         }
 
-        public override System.Threading.Tasks.Task OnDisconnected()
-        {
-            return base.OnDisconnected();
-        }
-
-        public void ActivateRandomizeData()
-        {
-            var radnom = new Random();
-            var record = new Customer()
-            {
-                
-            };
-            Clients.All.addMessage(record);
-        }
 
     }
 
