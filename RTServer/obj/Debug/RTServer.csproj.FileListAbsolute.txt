@@ -229,3 +229,4 @@ C:\RTRemoteServer\RTServer\bin\zh-Hans\System.Spatial.resources.dll
 C:\RTRemoteServer\RTServer\bin\zh-Hant\System.Spatial.resources.dll
 C:\RTRemoteServer\RTServer\obj\Debug\RTServer.dll
 C:\RTRemoteServer\RTServer\obj\Debug\RTServer.pdb
+C:\RTRemoteServer\RTServer\obj\Debug\RTServer.csprojResolveAssemblyReference.cache

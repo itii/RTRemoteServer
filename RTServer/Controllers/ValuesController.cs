@@ -30,24 +30,33 @@ namespace RTServer.Controllers
             //    });
             //}
             //return list;
+            var list = new List<Customer>();
+            var properties = typeof (Customer).GetProperties();
 
             var outputDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
             var logoFile = Path.Combine(outputDirectory, "Customers.txt");
             var realLogo = new Uri(logoFile).LocalPath;
+
             using (var sr = new StreamReader(realLogo))
             {
                 while (!sr.EndOfStream)
                 {
                     var strLine = sr.ReadLine();
                     var data = strLine.Split('\t');
-
-                    foreach (var s in data)
+                    var customer = new Customer
                     {
-
-                    }
+                        OrderId = Convert.ToInt32(data[0]),
+                        CustomerId = data[1],
+                        EmployeeId = Convert.ToInt32(data[2]),
+                        OrderDate = Convert.ToDateTime(data[3]),
+                        Freight = Convert.ToDouble(data[4]),
+                        ShipName = data[5],
+                        ShipAdress = data[6]
+                    };
+                    list.Add(customer);
                 }
             }
-            return null;
+            return list;
         }
 
         // GET api/values/5
