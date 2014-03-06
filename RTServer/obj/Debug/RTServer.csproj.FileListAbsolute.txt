@@ -310,3 +310,8 @@ C:\GitSource\RTServer\RTServer\bin\zh-Hans\System.Spatial.resources.dll
 C:\GitSource\RTServer\RTServer\bin\zh-Hant\System.Spatial.resources.dll
 C:\GitSource\RTServer\RTServer\obj\Debug\RTServer.dll
 C:\GitSource\RTServer\RTServer\obj\Debug\RTServer.pdb
+C:\GitSource\RTServer\RTServer\obj\Debug\RTServer.csprojResolveAssemblyReference.cache
+C:\GitSource\RTServer\RTServer\bin\MongoDB.Bson.dll
+C:\GitSource\RTServer\RTServer\bin\MongoDB.Driver.dll
+C:\GitSource\RTServer\RTServer\bin\MongoDB.Bson.xml
+C:\GitSource\RTServer\RTServer\bin\MongoDB.Driver.xml

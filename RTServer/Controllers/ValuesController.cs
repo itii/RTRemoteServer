@@ -6,81 +6,73 @@ using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Web.Http;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
+using MongoDB.Driver.Builders;
+using MongoDB.Driver.Linq;
 
 namespace RTServer.Controllers
 {
     public class ValuesController : ApiController
     {
+        const string connectionString = "mongodb://itii:falconsoft@ds037737.mongolab.com:37737/rt_mongo";
+
         // GET api/values
         public IEnumerable<Customer> Get()
         {
-            //var list = new List<Customer>();
-
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    list.Add(new Customer
-            //    {
-            //        OrderId = i * 123,
-            //        CustomerId = "Customer "+ i,
-            //        EmployeeId = i,
-            //        Freight = (double)i/32,
-            //        OrderDate = DateTime.Now,
-            //        ShipAdress = "Lviv, Street " + i *2 ,
-            //        ShipName = "SomeName"
-            //    });
-            //}
-            //return list;
-            var list = new List<Customer>();
-            var properties = typeof (Customer).GetProperties();
-
-            var outputDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
-            var logoFile = Path.Combine(outputDirectory, "Customers.txt");
-            var realLogo = new Uri(logoFile).LocalPath;
-
-            using (var sr = new StreamReader(realLogo))
-            {
-                while (!sr.EndOfStream)
-                {
-                    var strLine = sr.ReadLine();
-                    var data = strLine.Split('\t');
-                    var customer = new Customer
-                    {
-                        OrderId = Convert.ToInt32(data[0]),
-                        CustomerId = data[1],
-                        EmployeeId = Convert.ToInt32(data[2]),
-                        OrderDate = Convert.ToDateTime(data[3]),
-                        Freight = Convert.ToDouble(data[4]),
-                        ShipName = data[5],
-                        ShipAdress = data[6]
-                    };
-                    list.Add(customer);
-                }
-            }
-            return list;
+            var server = MongoServer.Create(connectionString);
+            var db = server.GetDatabase("rt_mongo");
+            var collection = db.GetCollection<Customer>("Customers");
+            return collection.FindAll();
         }
 
         // GET api/values/5
-        public string Get(int id)
+        public Customer Get(int id)
         {
-            return "value";
+            var server = MongoServer.Create(connectionString);
+            var db = server.GetDatabase("rt_mongo");
+            var collection = db.GetCollection<Customer>("Customers");
+            var customer = collection.AsQueryable().FirstOrDefault(f => f.OrderId == id);
+            if (customer == null) return new Customer();
+            return customer;
         }
 
         // POST api/values
-        public void Post([FromBody]string value)
+        public void Post(Customer value)
         {
+            var server = MongoServer.Create(connectionString);
+            var db = server.GetDatabase("rt_mongo");
+            var collection = db.GetCollection<Customer>("Customers");
+            collection.Insert(value);
         }
 
         // PUT api/values/5
-        public void Put(int id, [FromBody]string value)
+        public void Put(int id, Customer value)
         {
+            var server = MongoServer.Create(connectionString);
+            var db = server.GetDatabase("rt_mongo");
+            var collection = db.GetCollection<Customer>("Customers");
+            var update = Update.Set("OrderId", value.OrderId)
+                               .Set("CustomerId", value.CustomerId)
+                               .Set("EmployeeId", value.EmployeeId)
+                               .Set("OrderDate", value.OrderDate)
+                               .Set("Freight", value.Freight)
+                               .Set("ShipName", value.ShipName)
+                               .Set("ShipAdress", value.ShipAdress);
+            collection.Update(Query.EQ("OrderId", value.OrderId),update);
         }
 
         // DELETE api/values/5
         public void Delete(int id)
         {
+            var server = MongoServer.Create(connectionString);
+            var db = server.GetDatabase("rt_mongo");
+            var collection = db.GetCollection<Customer>("Customers");
+            collection.Remove(Query.EQ("OrderId", id));
         }
     }
-
+    [BsonIgnoreExtraElements]
     public class Customer
     {
         public int Index { get; set; }
