@@ -19,57 +19,56 @@ namespace RTServer.Controllers
         const string connectionString = "mongodb://itii:falconsoft@ds037737.mongolab.com:37737/rt_mongo";
 
         // GET api/values
-        public IEnumerable<Customer> Get()
+        public IEnumerable<SamplePortfolio> Get()
         {
             var server = MongoServer.Create(connectionString);
             var db = server.GetDatabase("rt_mongo");
-            var collection = db.GetCollection<Customer>("Customers");
+            var collection = db.GetCollection<SamplePortfolio>("SamplePortfolio");
             return collection.FindAll();
         }
 
         // GET api/values/5
-        public Customer Get(int id)
+        public SamplePortfolio Get(string id)
         {
             var server = MongoServer.Create(connectionString);
             var db = server.GetDatabase("rt_mongo");
-            var collection = db.GetCollection<Customer>("Customers");
-            var customer = collection.AsQueryable().FirstOrDefault(f => f.OrderId == id);
-            if (customer == null) return new Customer();
-            return customer;
+            var collection = db.GetCollection<SamplePortfolio>("SamplePortfolio");
+            var sample = collection.AsQueryable().FirstOrDefault(f => f.StuffID == id);
+            if (sample == null) return new SamplePortfolio();
+            return sample;
         }
 
         // POST api/values
-        public void Post(Customer value)
+        public void Post(SamplePortfolio value)
         {
             var server = MongoServer.Create(connectionString);
             var db = server.GetDatabase("rt_mongo");
-            var collection = db.GetCollection<Customer>("Customers");
+            var collection = db.GetCollection<SamplePortfolio>("SamplePortfolio");
             collection.Insert(value);
         }
 
         // PUT api/values/5
-        public void Put(int id, Customer value)
+        public void Put(string id, SamplePortfolio value)
         {
             var server = MongoServer.Create(connectionString);
             var db = server.GetDatabase("rt_mongo");
-            var collection = db.GetCollection<Customer>("Customers");
-            var update = Update.Set("OrderId", value.OrderId)
-                               .Set("CustomerId", value.CustomerId)
-                               .Set("EmployeeId", value.EmployeeId)
-                               .Set("OrderDate", value.OrderDate)
-                               .Set("Freight", value.Freight)
-                               .Set("ShipName", value.ShipName)
-                               .Set("ShipAdress", value.ShipAdress);
-            collection.Update(Query.EQ("OrderId", value.OrderId),update);
+            var collection = db.GetCollection<SamplePortfolio>("SamplePortfolio");
+            var update = Update.Set("StuffID", value.StuffID)
+                .Set("TVol", value.TVol)
+                .Set("TValue", value.TValue)
+                .Set("PriceC", value.PriceC)
+                .Set("OfferPrice", value.OfferPrice)
+                .Set("IRate", value.IRate);
+            collection.Update(Query.EQ("StuffID", value.StuffID), update);
         }
 
         // DELETE api/values/5
-        public void Delete(int id)
+        public void Delete(string id)
         {
             var server = MongoServer.Create(connectionString);
             var db = server.GetDatabase("rt_mongo");
-            var collection = db.GetCollection<Customer>("Customers");
-            collection.Remove(Query.EQ("OrderId", id));
+            var collection = db.GetCollection<SamplePortfolio>("SamplePortfolio");
+            collection.Remove(Query.EQ("StuffID", id));
         }
     }
     [BsonIgnoreExtraElements]
@@ -122,5 +121,24 @@ namespace RTServer.Controllers
             };
             return temp;
         }
+    }
+     [BsonIgnoreExtraElements]
+    public class SamplePortfolio
+    {
+        public int Index { get; set; }
+
+        public string StuffID { get; set; }
+
+        public double BidPrice { get; set; }
+
+        public double OfferPrice { get; set; }
+
+        public double PriceC { get; set; }
+
+        public double TVol { get; set; }
+
+        public double TValue { get; set; }
+
+        public double IRate { get; set; }
     }
 }
